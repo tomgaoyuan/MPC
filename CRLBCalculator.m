@@ -13,9 +13,10 @@ C = ones(N-1) + eye(N-1);
 pUpX = -( S(2:end, :) - repmat( X, N-1 ,1) )./ repmat(d(2:end), 1, 2) + ...
                 repmat( (S(1,:) - X)/d(1), N-1, 1);
 
-I = zeros(N-1);         %Fisher information
-for i = 1: (N-1)
-    for j = 1: (N-1)
+dim = length(X);        %Dimension of argument X
+I = zeros(dim);         %Fisher information
+for i = 1: dim
+    for j = 1: dim
         I(i,j) = pUpX(:, i).' * inv(C) * pUpX(:, j);
     end
 end
