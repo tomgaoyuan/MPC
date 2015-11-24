@@ -27,4 +27,18 @@ S = [ 0 0;
 % end
 % re = c * SIGMA^2 * inv(I)
 
-CRLBCalculator(X,S)
+% MPCMaker(X,S,3)
+% CRLBCalculator(X,S)
+
+x = linspace(-0.99, 0.99 , 100);
+y = linspace(-0.99, 0.99 , 100);
+mZ = zeros(100);
+for i = 1:100
+    for j = 1:100
+        sNew = MPCMaker([x(i) , y(j)], S, 2);
+        re = CRLBCalculator([x(i) , y(j)], sNew);
+        mZ(i ,j) = trace(re);
+    end
+end
+[ mX mY] = meshgrid(x, y);
+mesh(mX, mY, mZ);
