@@ -20,7 +20,7 @@ for i = 1: dim
         I(i,j) = pUpX(:, i).' * inv(C) * pUpX(:, j);
     end
 end
-re = c * SIGMA^2 * inv(I);
+re = c^2 * SIGMA^2 * inv(I);
 
 end
 
