@@ -26,7 +26,7 @@ for i = 1:100
 end
 [ mX mY] = meshgrid(x, y);
 figure(1);
-mesh(mX, mY, mZ);
+meshc(mX, mY, mZ);
 mZ2 = zeros(100);
 for i = 1:100
     for j = 1:100
@@ -40,4 +40,4 @@ for i = 1:100
     end
 end
 figure(2);
-mesh(mX, mY, mZ2);
+meshc(mX, mY, mZ2);
