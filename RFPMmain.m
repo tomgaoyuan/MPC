@@ -1,3 +1,6 @@
+clc;
+clear all;
+c = 3e8;
 S = [ 0 0;
       0 2;
       -2 0
@@ -9,9 +12,36 @@ S = [ 0 0;
       0 -4];
 PATH = 3;
 discreteX = linspace(-1, 1, 1000);
-discreteY = linspace(-1, 1, 1000);  
+discreteY = linspace(-1, 1, 1000); 
 
 %establish the dataBase of average
-map = discreteX.' * discreteY;
-flag = zeros(1, size(map,1) * size(map,2) );    %0 for not conclude, 1 for correct, -1 for no enough data 
-fingerprint = zeros( size(map,1) * size(map,2), PATH);
+flag = zeros( length(discreteX) , length(discreteY) );    %0 for not conclude, 1 for correct, -1 for no enough data 
+fingerPrint = zeros( length(discreteX) , length(discreteY), PATH);
+for i = 1: length(discreteX)
+    for j = 1:length(discreteY)
+        X = [ discreteX(i) discreteY(j) ];
+        try 
+            re = MPCMaker(X, S, PATH);
+            d = sqrt( sum( ( re - repmat( X, size( re, 1), 1) ).^2, 2) );
+            sort(d);
+            tdoa = ( d(2:end) - d(1) ) / c;
+            fingerPrint( i, j, :) = tdoa;
+            flag(i, j) =1;
+        catch ME
+            flag(i, j) =-1;
+        end
+    end
+end
+
+tdoaSample = fingerPrint( 2, 2, :);
+distance = Inf;
+re = [];
+for i = 1: length(discreteX)
+    for j = 1:length(discreteY)
+        tmp = sqrt( sum( (fingerPrint(i, j, :) - tdoaSample).^2) );
+        if  tmp < distance
+            distance = tmp;
+            re = [i j];
+        end
+    end
+end
