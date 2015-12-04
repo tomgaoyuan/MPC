@@ -5,7 +5,7 @@ clc;
 %import para. here
 % X = [0 1/2];
 
-theta = 2*pi * [ 0:7 ] /8; 
+
 % S = [ 0 0;
 %       0 2;
 %       -2 0
@@ -15,11 +15,19 @@ theta = 2*pi * [ 0:7 ] /8;
 %       -4 0;
 %       0 4;
 %       0 -4];
-S(:, 1) = [1:8] .* cos(theta);
-S(:, 2) = [1:8] .* sin(theta);
+% theta = 2*pi * [ 0:7 ] /8; 
+% S(:, 1) = [1:8] .* cos(theta);
+% S(:, 2) = [1:8] .* sin(theta);
+S = [  2 2;
+       -2 2;
+       -2 -2;
+       2 -2];
+     
+% x = linspace(-0.99, 0.99 , 100);
+% y = linspace(-0.99, 0.99 , 100);
+x = linspace(0, 1 , 100);
+y = linspace(0, 1 , 100);
 
-x = linspace(-0.99, 0.99 , 100);
-y = linspace(-0.99, 0.99 , 100);
 mZ = zeros(100);
 for i = 1:100
     for j = 1:100
