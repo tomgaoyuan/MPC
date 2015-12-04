@@ -27,10 +27,12 @@ SYSTEM.SIGMA = 0.01;
 %FIRST PHASE
 load('data');
 error = zeros(1, 1000);
-X = [discreteX(10) discreteY(5)]; 
+% discreteX = linspace( SYSTEM.X(1), SYSTEM.X(2), 100);
+% discreteY = linspace( SYSTEM.Y(1), SYSTEM.Y(2), 100);
+X = [discreteX(90) discreteY(5)]; 
 for drop = 1:1000
     [ sample flag ] = sampleTDOPAMaker(X, S, SYSTEM.NTDOPA,SYSTEM.C, SYSTEM.SIGMA);
-    
+    assert(flag == 0);
     %%using knn arthimetic
     % idx = knnsearch( fingerPrintCol, sample.');
     % idx = [ mod(idx, size(fingerPrint,1)) fix(idx/size(fingerPrint,1)) ];

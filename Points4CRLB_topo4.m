@@ -22,7 +22,8 @@ S = [  2 2;
        -2 2;
        -2 -2;
        2 -2];
-     
+ v = 1;
+ sigma =0.01;
 % x = linspace(-0.99, 0.99 , 100);
 % y = linspace(-0.99, 0.99 , 100);
 x = linspace(0, 1 , 100);
@@ -33,7 +34,7 @@ for i = 1:100
     for j = 1:100
         [ sNew f] = MPCMaker([x(i) , y(j)], S, 3);
         if f == 0
-            re = CRLBCalculator([x(i) , y(j)], sNew, 1, 1);
+            re = CRLBCalculator([x(i) , y(j)], sNew, v, sigma);
             mZ(i ,j) = trace(re);
         else
             mZ(i, j) = NaN;
@@ -43,3 +44,9 @@ end
 [ mX mY] = meshgrid(x, y);
 figure(1);
 meshc(mX, mY, mZ);
+
+load('data');
+X = [discreteX(90) discreteY(5)]; 
+[ sNew f] = MPCMaker(X, S, 3);
+re = CRLBCalculator(X, sNew, v, sigma);
+trace(re)
