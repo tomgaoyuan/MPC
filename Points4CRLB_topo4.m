@@ -33,7 +33,7 @@ for i = 1:100
     for j = 1:100
         [ sNew f] = MPCMaker([x(i) , y(j)], S, 3);
         if f == 0
-            re = CRLBCalculator([x(i) , y(j)], sNew);
+            re = CRLBCalculator([x(i) , y(j)], sNew, 1, 1);
             mZ(i ,j) = trace(re);
         else
             mZ(i, j) = NaN;

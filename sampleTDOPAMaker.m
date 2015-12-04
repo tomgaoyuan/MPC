@@ -14,7 +14,7 @@ switch f
         d = sqrt( sum( ( newS - repmat( X, size( newS, 1), 1) ).^2, 2) );
         sort(d);
         %add noise on TOA
-        d = d + sigma * randn( size(d,1), size(d,2) );
+        d = d + sigma * v* randn( size(d,1), size(d,2) ) ;
         re = ( d(2:end) - d(1) ) / v;
         flag = 0;
     otherwise
