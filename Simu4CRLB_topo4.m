@@ -25,12 +25,10 @@ SYSTEM.Y = [ 0 1];
 SYSTEM.C = 1;
 SYSTEM.SIGMA = 0.01;
 %FIRST PHASE
-discreteX = linspace( SYSTEM.X(1), SYSTEM.X(2), 100);
-discreteY = linspace( SYSTEM.Y(1), SYSTEM.Y(2), 100);
 load('data');
 error = zeros(1, 1000);
+X = [discreteX(10) discreteY(5)]; 
 for drop = 1:1000
-    X = [discreteX(10) discreteY(5)];   
     [ sample flag ] = sampleTDOPAMaker(X, S, SYSTEM.NTDOPA,SYSTEM.C, SYSTEM.SIGMA);
     
     %%using knn arthimetic

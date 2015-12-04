@@ -18,15 +18,15 @@ S = [  2 2;
        -2 -2;
        2 -2];
 
-FLAG_LOAD = 1;
 SYSTEM.NTDOPA = 3;
 SYSTEM.X = [ 0 1];
 SYSTEM.Y = [ 0 1];
 SYSTEM.C = 1;
-SYSTEM.SIGMA = 0.001;
+SYSTEM.SIGMA = 0.0001;
 %FIRST PHASE
 discreteX = linspace( SYSTEM.X(1), SYSTEM.X(2), 100);
 discreteY = linspace( SYSTEM.Y(1), SYSTEM.Y(2), 100);
+FLAG_LOAD = 0;
 if FLAG_LOAD
     %establish the dataBase of average
     fingerPrintFlag = -1 * ones( length(discreteX) , length(discreteY) );    %-1 for not conclude, 0 for correct, 1 for no enough data
@@ -41,13 +41,14 @@ if FLAG_LOAD
         end
     end
     fingerPrintCol = reshape( fingerPrint, size(fingerPrint,1) * size(fingerPrint,2), SYSTEM.NTDOPA );
-    save('data', 'fingerPrintFlag', 'fingerPrint','fingerPrintCol','S');
+    save('data','discreteX', 'discreteY', 'fingerPrintFlag', 'fingerPrint','fingerPrintCol','S');
 else
     load('data');
 end
 
-error = zeros(1, 1000);
-for drop = 1:1000
+NDROP = 1000;
+error = zeros(1, NDROP);
+for drop = 1:NDROP
     f = false;
     while ~f
     X = rand(1,2) .* [SYSTEM.X(2) - SYSTEM.X(1), SYSTEM.Y(2) - SYSTEM.Y(1)] + [  SYSTEM.X(1) SYSTEM.Y(1) ];   
@@ -74,5 +75,6 @@ for drop = 1:1000
     end
     XEst = [ discreteX( idx(1) ) discreteY( idx(2) ) ];
     error(drop) = sqrt( sum( (X - XEst).^2 ) );
+    disp( [ num2str(drop) 'of' num2str(NDROP)] );
     disp(error(drop));
 end
