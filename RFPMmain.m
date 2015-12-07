@@ -1,34 +1,17 @@
 clc;
 clear all;
 
-% S = [ 0 0;
-%       0 2;
-%       -2 0
-%       2 0;
-%       0 -2
-%       4 0;
-%       -4 0;
-%       0 4;
-%       0 -4];
-% theta = 2*pi * [ 0:7 ] /8; 
-% S(:, 1) = [1:8] .* cos(theta);
-% S(:, 2) = [1:8] .* sin(theta)
-S = [  2 2;
-       -2 2;
-       -2 -2;
-       2 -2];
-
-SYSTEM.NTDOPA = 3;
-SYSTEM.X = [ 0 1];
-SYSTEM.Y = [ 0 1];
-SYSTEM.C = 1;
-SYSTEM.SIGMA = 0.0001;
+parameters;
 %FIRST PHASE
-discreteX = linspace( SYSTEM.X(1), SYSTEM.X(2), 100);
-discreteY = linspace( SYSTEM.Y(1), SYSTEM.Y(2), 100);
 FLAG_LOAD = 0;
 if FLAG_LOAD
     %establish the dataBase of average
+    S = [  200 200;
+       -200 200;
+       -200 -200;
+       200 -200];
+    discreteX = SYSTEM.X(1) : SYSTEM.L : SYSTEM.X(2);
+    discreteY = SYSTEM.Y(1) : SYSTEM.L : SYSTEM.Y(2);
     fingerPrintFlag = -1 * ones( length(discreteX) , length(discreteY) );    %-1 for not conclude, 0 for correct, 1 for no enough data
     fingerPrint = zeros( length(discreteX) , length(discreteY), SYSTEM.NTDOPA);
     for i = 1: length(discreteX)
