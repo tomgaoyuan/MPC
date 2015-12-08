@@ -2,7 +2,6 @@ clear all;
 parameters;
 load('data');
 X = [ 150 50];
-X = X + rand(1,2) .* [ -SYSTEM.L SYSTEM.L];
 NDROP = 1000;
 error = zeros(1, NDROP);
 for drop = 1:NDROP
