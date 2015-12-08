@@ -2,6 +2,7 @@ clear all;
 parameters;
 load('data');
 X = [ 150 50];
+X = X + rand(1,2) .* [ -SYSTEM.L SYSTEM.L];
 NDROP = 1000;
 error = zeros(1, NDROP);
 for drop = 1:NDROP
@@ -10,7 +11,8 @@ for drop = 1:NDROP
 %     X = rand(1,2) .* [SYSTEM.X(2) - SYSTEM.X(1), SYSTEM.Y(2) - SYSTEM.Y(1)] + [  SYSTEM.X(1) SYSTEM.Y(1) ];   
 %     f = confine(X);
 %     end
-    [ sample flag ] = sampleTDOPAMaker(X, S, SYSTEM.NTDOPA,SYSTEM.C, SYSTEM.SIGMA);
+    Xnew = X + rand(1,2) .* [ -SYSTEM.L SYSTEM.L] /2;
+    [ sample flag ] = sampleTDOPAMaker(Xnew, S, SYSTEM.NTDOPA,SYSTEM.C, SYSTEM.SIGMA);
     
     %%using knn arthimetic
     % idx = knnsearch( fingerPrintCol, sample.');
@@ -30,7 +32,7 @@ for drop = 1:NDROP
         end
     end
     XEst = [ discreteX( idx(1) ) discreteY( idx(2) ) ];
-    error(drop) = sqrt( sum( (X - XEst).^2 ) );
+    error(drop) = sqrt( sum( (Xnew - XEst).^2 ) );
     disp( [ num2str(drop) 'of' num2str(NDROP)] );
     disp(error(drop));
 end
