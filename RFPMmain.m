@@ -3,7 +3,7 @@ clear all;
 
 parameters;
 %FIRST PHASE
-FLAG_LOAD = 0;
+FLAG_LOAD = 1;
 if FLAG_LOAD
     %establish the dataBase of average
     S = [  200 200;
