@@ -6,10 +6,7 @@ parameters;
 FLAG_LOAD = 1;
 if FLAG_LOAD
     %establish the dataBase of average
-    S = [  200 200;
-       -200 200;
-       -200 -200;
-       200 -200];
+    S = SYSTEM.S;
     discreteX = SYSTEM.X(1) : SYSTEM.L : SYSTEM.X(2);
     discreteY = SYSTEM.Y(1) : SYSTEM.L : SYSTEM.Y(2);
     fingerPrintFlag = -1 * ones( length(discreteX) , length(discreteY) );    %-1 for not conclude, 0 for correct, 1 for no enough data
@@ -24,7 +21,7 @@ if FLAG_LOAD
         end
     end
     fingerPrintCol = reshape( fingerPrint, size(fingerPrint,1) * size(fingerPrint,2), SYSTEM.NTDOPA );
-    save('data','discreteX', 'discreteY', 'fingerPrintFlag', 'fingerPrint','fingerPrintCol','S');
+    save('data','discreteX', 'discreteY', 'fingerPrintFlag', 'fingerPrint','fingerPrintCol');
 else
     load('data');
 end

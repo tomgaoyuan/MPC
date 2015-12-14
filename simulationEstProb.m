@@ -2,6 +2,7 @@ clear all;
 parameters;
 load('data');
 X = [ 150 50];
+S = SYSTEM.S;
 NDROP = 1000;
 error = zeros(1, NDROP);
 for drop = 1:NDROP

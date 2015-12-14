@@ -1,6 +1,7 @@
 clear all;
 parameters;
 load('data');
+S = SYSTEM.S;
 X = [ 150 50];
 NDROP = 1000;
 error = zeros(1, NDROP);
