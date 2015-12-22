@@ -11,7 +11,6 @@ function [ re flag ] = TDOPAMaker( X, S, nTDOPA, v )
 switch f
     case { 0 2} %normal & paths coinciding
         d = sqrt( sum( ( newS - repmat( X, size( newS, 1), 1) ).^2, 2) );
-        sort(d);
         re = ( d(2:end) - d(1) ) / v;
         flag = 0;
     otherwise

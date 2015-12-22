@@ -3,7 +3,7 @@ clear all;
 
 parameters;
 %FIRST PHASE
-FLAG_LOAD = 1;
+FLAG_LOAD = 0;
 if FLAG_LOAD
     %establish the dataBase of average
     S = SYSTEM.S;
@@ -29,6 +29,10 @@ end
 
 NDROP = 1000;
 error = zeros(1, NDROP);
+%prepare
+C = SYSTEM.SIGMA^2 * ( eye(SYSTEM.NTDOPA) + ones(SYSTEM.NTDOPA) );
+Cinv = inv(C);
+
 for drop = 1:NDROP
     f = false;
     while ~f
@@ -48,7 +52,7 @@ for drop = 1:NDROP
                 continue;
             end
             %tmp = sqrt( sum( (fingerPrintCol(i + (j -1) * size(fingerPrint,1), :) - sample.').^2) );
-            tmp = EuclidNorm( fingerPrintCol(i + (j -1) * size(fingerPrint,1), :), sample.');
+            tmp = MNorm( fingerPrintCol(i + (j -1) * size(fingerPrint,1), :), sample.', Cinv);
             if  tmp < distance
                 distance = tmp;
                 idx = [i j];

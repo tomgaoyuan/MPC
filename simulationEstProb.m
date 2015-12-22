@@ -1,7 +1,8 @@
 clear all;
 parameters;
 load('data');
-X = [ 150 50];
+X = [ 150 50]; %S1
+% X = [ 350 50]; %S6
 S = SYSTEM.S;
 NDROP = 1000;
 error = zeros(1, NDROP);
@@ -23,7 +24,8 @@ for drop = 1:NDROP
             if fingerPrintFlag(i, j) == -1
                 continue;
             end
-            tmp = sqrt( sum( (fingerPrintCol(i + (j -1) * size(fingerPrint,1), :) - sample.').^2) );
+%             tmp = sqrt( sum( (fingerPrintCol(i + (j -1) * size(fingerPrint,1), :) - sample.').^2) );
+            tmp = EuclidNorm( fingerPrintCol(i + (j -1) * size(fingerPrint,1), :), sample.');
             if  tmp < distance
                 distance = tmp;
                 idx = [i j];

@@ -1,4 +1,4 @@
-function [ re ] = correctEstProb( X, S, nTDOPA, a, sigma )
+function [ re ] = correctEstProbIndepen( X, S, nTDOPA, a, sigma )
 %calculate the correct estimation probability
 %   Approximate : dependence 4 neighbour
 v=1;
@@ -7,8 +7,8 @@ assert( flag == 0 );
 tmp = sqrt( sum( ( newS - repmat( X, size( newS, 1), 1) ).^2, 2) );
 tmp = sort(tmp);
 localAverage = ( tmp(2:end) - tmp(1) ) / v;
-C = sigma^2 * ( eye(nTDOPA) + ones(nTDOPA) );
-% C = sigma^2 * 2 * ( eye(nTDOPA) );     %HERE IGNORE the dependence
+% C = sigma^2 * ( eye(nTDOPA) + ones(nTDOPA) );
+C = sigma^2 * 2 * ( eye(nTDOPA) );     %HERE IGNORE the dependence
 
 re = 1;
 pattern = a *[ 1 0;

@@ -12,9 +12,9 @@ function [ re flag ] = sampleTDOPAMaker( X, S, nTDOPA, v, sigma )
 switch f
     case { 0 2} %normal & paths coinciding
         d = sqrt( sum( ( newS - repmat( X, size( newS, 1), 1) ).^2, 2) );
-        sort(d);
         %add noise on TOA
-        d = d + sigma * v* randn( size(d,1), size(d,2) ) ;
+        n = sigma * randn( size(d,1), size(d,2) ); %unit:time
+        d = d + v* n ;
         re = ( d(2:end) - d(1) ) / v;
         flag = 0;
     otherwise
