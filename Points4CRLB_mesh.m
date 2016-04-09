@@ -40,9 +40,25 @@ for i = 1:length(x)
 end
 [ mX mY] = meshgrid(x, y);
 figure(1);
+[c,h] = contour(mX, mY, mZ);
+clabel(c,h);
+grid on;
+axis square;
+xlabel('X axis');
+ylabel('Y axis');
+set(h,'LineWidth',2)
+hold on;
+plot(SYSTEM.S(1,1),SYSTEM.S(1,2), 'ro','LineWidth',2);
+legend('CRB','image');
+% plot(150,50,'gx','LineWidth',2);
+% plot(250,50,'gx','LineWidth',2);
+% plot(350,50,'gx','LineWidth',2);
+% plot(250,150,'gx','LineWidth',2);
+% plot(350,150,'gx','LineWidth',2);
+% plot(350,250,'gx','LineWidth',2);
+% title('Cramer-Rao Bound contour');
+figure(2);
 meshc(mX, mY, mZ);
-% contour(mX, mY, mZ);
-
 % load('data');
 % X = [discreteX(90) discreteY(5)]; 
 % [ sNew f] = MPCMaker(X, S, 3);

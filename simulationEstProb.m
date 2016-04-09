@@ -37,3 +37,4 @@ for drop = 1:NDROP
     disp( [ num2str(drop) 'of' num2str(NDROP)] );
     disp(error(drop));
 end
+sum(error == 0)/Ndrop

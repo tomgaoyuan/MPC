@@ -7,16 +7,16 @@ assert( flag == 0 );
 tmp = sqrt( sum( ( newS - repmat( X, size( newS, 1), 1) ).^2, 2) );
 tmp = sort(tmp);
 localAverage = ( tmp(2:end) - tmp(1) ) / v;
-C = sigma^2 * ( eye(nTDOPA) + ones(nTDOPA) );
+C = ( eye(nTDOPA) + ones(nTDOPA) );
 % C = sigma^2 * 2 * ( eye(nTDOPA) );     %HERE IGNORE the dependence
-
+Cinv = inv(C)/ sigma^2;
 re = 1;
 pattern = a *[ 1 0;
                0 1;
                -1 0;
                0 -1];
 for i = 1: size(pattern , 1)               
-    neighbour = X + pattern(1,:);
+    neighbour = X + pattern(i,:);
     tmp = sqrt( sum( ( newS - repmat( neighbour, size( newS, 1), 1) ).^2, 2) );     %assumption neighbour & local point have the same source
     tmp = sort(tmp);
     neighbourAverage =  ( tmp(2:end) - tmp(1) ) / v;
@@ -29,7 +29,8 @@ for i = 1: size(pattern , 1)
 %     re = re * 1/2 * erfc( E / (sqrt(2 * D) ) ) ;  %HERE IGNORE the dependence. 
 %       re = re * normcdf( sqrt( d.' * d) / (2 * sqrt(2) * sigma));   %HERE IGNORE the dependence. 
 %     re = re * normcdf( d.' * d / sqrt( d.' * C * d ) /2 );    %
-      re = re * normcdf( d.' * d / sqrt( d.' * C * d ) /2 ); %HERE Consider the dependence of observer vector
+%       re = re * normcdf( d.' * d / sqrt( d.' * C * d ) /2 ); %HERE Consider the dependence of observer vector
+    re = re * normcdf( sqrt( d.' * Cinv * d) /2);
 end
 end
 
